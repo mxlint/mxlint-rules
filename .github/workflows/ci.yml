@@ -9,37 +9,26 @@ on:
 
 jobs:
 
-  Policies:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Test Policies
-      run: ./run-policy-tests.sh
-
   CLI:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: 1.22
-
-    - name: Build
-      run: go build -o bin/mendix-cli "./cmd/mendix-cli"
-
-    - name: Test
-      run: go test -v ./...
-
-    - name: Test subcommand export-model
+    - name: Download mxlint binary
       run: |
-        bin/mendix-cli export-model --mode advanced -i resources/app
-        git diff --exit-code modelsource 
+        curl -L https://github.com/mxlint/mxlint/releases/download/v3.0.0/mxlint-v3.0.0-linux-amd64 -o mxlint
+        chmod +x mxlint
 
-    - name: Test subcommand lint
-      run: ./bin/mendix-cli lint --xunit-report report.xml
+    - name: Download modelsource
+      run: |
+        curl -L https://github.com/mxlint/mxlint-cli/archive/refs/heads/main.zip -o cli.zip
+        unzip cli.zip
+        mv mxlint-cli-main/modelsource modelsource
+        rm cli.zip
+        rm -rf mxlint-cli-main
+
+    - name: Lint
+      run: ./mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource
 
     - name: Process xunit-report
       uses: dorny/test-reporter@v1

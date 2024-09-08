@@ -5,38 +5,17 @@ on:
     types: [created]
 
 jobs:
-  release-cli:
-    name: Release CLI binary
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # build and publish in parallel: linux/amd64
-        goos: [linux, windows, darwin]
-        goarch: [amd64, arm64]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tests
-        run: go test -v -p=1 -timeout=0 ./...
-      - uses: wangyoucao577/go-release-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: ${{ matrix.goos }}
-          goarch: ${{ matrix.goarch }}
-          project_path: "./cmd/mendix-cli"
-          binary_name: "mendix-cli"
-          ldflags: "-s -w"
-          compress_assets: OFF
-  release-policies:
-    name: Release Policies
+  release-rules:
+    name: Release rules
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Zip policies directory
-        run: zip -r policies.zip policies/
+      - name: Zip rules directory
+        run: zip -r rules.zip rules/
 
-      - name: Create Tar.gz policies directory
-        run: tar -czvf policies.tar.gz policies/
+      - name: Create Tar.gz of rules directory
+        run: tar -czvf rules.tar.gz rules/
 
       - name: Get release
         id: get_release
@@ -50,8 +29,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ./policies.zip
-          asset_name: policies-${{ steps.get_release.outputs.tag_name}}.zip
+          asset_path: ./rules.zip
+          asset_name: rules-${{ steps.get_release.outputs.tag_name}}.zip
           asset_content_type: application/zip
 
       - name: Upload Release Asset (tar.gz)
@@ -60,6 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ./policies.tar.gz
-          asset_name: policies-${{ steps.get_release.outputs.tag_name}}.tar.gz
+          asset_path: ./rules.tar.gz
+          asset_name: rules-${{ steps.get_release.outputs.tag_name}}.tar.gz
           asset_content_type: application/gzip
