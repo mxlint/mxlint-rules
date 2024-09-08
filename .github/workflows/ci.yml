@@ -16,15 +16,15 @@ jobs:
 
     - name: Download mxlint binary
       run: |
-        curl -L https://github.com/mxlint/mxlint/releases/download/v3.0.0/mxlint-v3.0.0-linux-amd64 -o mxlint
+        curl -L https://github.com/mxlint/mxlint-cli/releases/download/v3.0.0/mxlint-v3.0.0-linux-amd64 -o mxlint
         chmod +x mxlint
 
     - name: Download modelsource
       run: |
-        curl -L https://github.com/mxlint/mxlint-cli/archive/refs/heads/main.zip -o cli.zip
-        unzip cli.zip
+        curl -L https://github.com/mxlint/mxlint-cli/archive/refs/heads/main.zip -o modelsource.zip
+        unzip modelsource.zip
         mv mxlint-cli-main/modelsource modelsource
-        rm cli.zip
+        rm modelsource.zip
         rm -rf mxlint-cli-main
 
     - name: Lint
