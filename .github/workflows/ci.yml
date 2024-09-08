@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  CLI:
+  Rules:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -37,3 +37,4 @@ jobs:
         name: Lint Test Report
         path: report.xml
         reporter: java-junit
+        token: ${{ secrets.PAT }}
