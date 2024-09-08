@@ -30,11 +30,8 @@ jobs:
     - name: Lint
       run: ./mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource
 
-    - name: Process xunit-report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
+    - name: Upload report
+      uses: actions/upload-artifact@v4
       with:
-        name: Lint Test Report
+        name: report
         path: report.xml
-        reporter: java-junit
-        token: ${{ secrets.PAT }}
