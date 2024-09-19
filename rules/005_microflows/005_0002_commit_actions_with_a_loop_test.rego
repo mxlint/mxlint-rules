@@ -10,49 +10,19 @@ loop_commit_good = {
     {
       "Attributes": {
         "$Type": "Microflows$LoopedActivity",
-        "Documentation": "",
-        "ErrorHandlingType": "Rollback",
-        "LoopSource": {
-          "$Type": "Microflows$IterableList",
-          "ListVariableName": "BikeList",
-          "VariableName": "IteratorBike"
-        },
         "ObjectCollection": {
           "$Type": "Microflows$MicroflowObjectCollection",
           "Objects": [
             {
-              "$ID": "REoQzbooxUqlJfxtM61uuw==",
               "$Type": "Microflows$ActionActivity",
               "Action": {
-                "$ID": "ePBJZv2ockmxBjt1gRJInw==",
                 "$Type": "Microflows$ChangeAction",
-                "ChangeVariableName": "IteratorBike",
-                "Commit": "No",
-                "ErrorHandlingType": "Rollback",
-                "Items": [
-                  {
-                    "$ID": "vlZ2qLGLHkaufP+Kexafqg==",
-                    "$Type": "Microflows$ChangeActionItem",
-                    "Association": "",
-                    "Attribute": "MyFirstModule.Bike.Name",
-                    "Type": "Set",
-                    "Value": "'abc'"
-                  }
-                ],
-                "RefreshInClient": false
-              },
-              "AutoGenerateCaption": true,
-              "BackgroundColor": "Default",
-              "Caption": "Activity",
-              "Disabled": false,
-              "Documentation": "",
-              "RelativeMiddlePoint": "184;120",
-              "Size": "120;60"
+                "Commit": "No"
+              }
             }
           ]
         }
-      },
-      "ID": "Rdteip+prkClEKtbbvRbHw=="
+      }
     }
   ]
 }
@@ -60,47 +30,33 @@ loop_commit_good = {
 loop_commit_bad = {
   "$Type": "Microflow$Microflow",
   "Name": "MicroflowForLoop",
-  "MainFunction":[
+  "MainFunction": [
     {
       "Attributes": {
         "$Type": "Microflows$LoopedActivity",
-        "Documentation": "",
-        "ErrorHandlingType": "Rollback",
-        "LoopSource": {
-          "$Type": "Microflows$IterableList",
-          "ListVariableName": "BikeList",
-          "VariableName": "IteratorBike"
-        },
         "ObjectCollection": {
           "$Type": "Microflows$MicroflowObjectCollection",
           "Objects": [
             {
-              "$ID": "JON699i5X06+mJmpljIlIQ==",
               "$Type": "Microflows$ActionActivity",
               "Action": {
-                "$ID": "lBbh4nwji0+ufvpEbuKqgA==",
-                "$Type": "Microflows$CommitAction",
-                "CommitVariableName": "IteratorBike",
-                "ErrorHandlingType": "Rollback",
-                "RefreshInClient": false,
-                "WithEvents": true
-              },
-              "AutoGenerateCaption": true,
-              "BackgroundColor": "Default",
-              "Caption": "Activity",
-              "Disabled": false,
-              "Documentation": "",
-              "RelativeMiddlePoint": "186;100",
-              "Size": "120;60",
-              "Description": "Commits changes to the current bike in the iteration"
+                "$Type": "Microflows$CommitAction"
+              }
+            },
+            {
+              "$Type": "Microflows$ActionActivity",
+              "Action": {
+                "$Type": "Microflows$ChangeAction",
+                "Commit": "Yes"
+              }
             }
           ]
         }
-      },
-      "ID": "Rdteip+prkClEKtbbvRbHw=="
+      }
     }
   ]
 }
+
 
 # Test cases
 test_loop_commit_good if {
