@@ -23,4 +23,4 @@ if [ ! -f "$OPA" ]; then
     chmod +x "$OPA"
 fi
 
-$OPA test -v policies
+$OPA test -v rules
