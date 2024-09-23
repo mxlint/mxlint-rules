@@ -1,9 +1,10 @@
-package app.mendix.pages.inline_style_property_used
+package app.mendix.pages.inline_style_property_used_test
+
+import data.app.mendix.pages.inline_style_property_used
 import rego.v1
 
-
 # Test data
-form_simple = {
+form_simple := {
 	"$Type": "Forms$Page",
 	"Name": "Page1",
 	"Appearance": {
@@ -14,7 +15,8 @@ form_simple = {
 		"Style": "",
 	},
 }
-form_simple_negative = {
+
+form_simple_negative := {
 	"$Type": "Forms$Page",
 	"Name": "Page1",
 	"Appearance": {
@@ -26,87 +28,61 @@ form_simple_negative = {
 	},
 }
 
-form_nested = {
+form_nested := {
 	"Name": "Page1",
-	"FormCall": {
-		"Arguments": [
-			{
-				"Widgets": [
-					{
-						"$Type": "Forms$LayoutGrid",
-						"Name": "layoutGrid2",
-						"Rows": [
-							{
-								"$Type": "Forms$LayoutGridRow",
-								"Columns": [
-									{
-										"$Type": "Forms$LayoutGridColumn",
-										"Appearance": {
-											"$Type": "Forms$Appearance",
-											"Class": "",
-											"DesignProperties": null,
-											"DynamicClasses": "",
-											"Style": "",
-										}
-									},
-								],
-							},
-						],
-					},
-				],
-			},
-		],
-	},
+	"FormCall": {"Arguments": [{"Widgets": [{
+		"$Type": "Forms$LayoutGrid",
+		"Name": "layoutGrid2",
+		"Rows": [{
+			"$Type": "Forms$LayoutGridRow",
+			"Columns": [{
+				"$Type": "Forms$LayoutGridColumn",
+				"Appearance": {
+					"$Type": "Forms$Appearance",
+					"Class": "",
+					"DesignProperties": null,
+					"DynamicClasses": "",
+					"Style": "",
+				},
+			}],
+		}],
+	}]}]},
 }
 
-form_nested_negative = {
+form_nested_negative := {
 	"Name": "Page1",
-	"FormCall": {
-		"Arguments": [
-			{
-				"Widgets": [
-					{
-						"$Type": "Forms$LayoutGrid",
-						"Name": "layoutGrid2",
-						"Rows": [
-							{
-								"$Type": "Forms$LayoutGridRow",
-								"Columns": [
-									{
-										"$Type": "Forms$LayoutGridColumn",
-										"Appearance": {
-											"$Type": "Forms$Appearance",
-											"Class": "",
-											"DesignProperties": null,
-											"DynamicClasses": "",
-											"Style": "color: orange;",
-										}
-									},
-								],
-							},
-						],
-					},
-				],
-			},
-		],
-	},
+	"FormCall": {"Arguments": [{"Widgets": [{
+		"$Type": "Forms$LayoutGrid",
+		"Name": "layoutGrid2",
+		"Rows": [{
+			"$Type": "Forms$LayoutGridRow",
+			"Columns": [{
+				"$Type": "Forms$LayoutGridColumn",
+				"Appearance": {
+					"$Type": "Forms$Appearance",
+					"Class": "",
+					"DesignProperties": null,
+					"DynamicClasses": "",
+					"Style": "color: orange;",
+				},
+			}],
+		}],
+	}]}]},
 }
-
-
 
 # Test cases
 test_simple if {
-	allow with input as form_simple
+	inline_style_property_used.allow with input as form_simple
 }
 
 test_simple_negative if {
-	not allow with input as form_simple_negative
+	not inline_style_property_used.allow with input as form_simple_negative
 }
 
 test_nested if {
-	allow with input as form_nested
+	inline_style_property_used.allow with input as form_nested
 }
 
 test_nested_negative if {
-	not allow with input as form_nested_negative
+	not inline_style_property_used.allow with input as form_nested_negative
 }

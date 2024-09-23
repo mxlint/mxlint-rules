@@ -1,55 +1,43 @@
-package app.mendix.domain_model.avoid_using_validation_rules
+package app.mendix.domain_model.avoid_using_validation_rules_test
 
+import data.app.mendix.domain_model.avoid_using_validation_rules
 import rego.v1
-
 
 # Test data
 
-positive := {
-  "Entities": [
-    {
-      "ValidationRules": [],
-      "Name": "Bike"
-    }
-  ]
-}
+positive := {"Entities": [{
+	"ValidationRules": [],
+	"Name": "Bike",
+}]}
 
-negative := {
-  "Entities": [
-    {
-      "ValidationRules": [
-        {
-          "$Type": "DomainModels$ValidationRule",
-          "Attribute": "MyFirstModule.Bike.Name",
-          "Message": {
-            "$Type": "Texts$Text",
-            "Items": [
-              {
-                "$Type": "Texts$Translation",
-                "LanguageCode": "en_US",
-                "Text": "Not a good name"
-              }
-            ]
-          },
-          "RuleInfo": {
-            "$Type": "DomainModels$EqualsToRuleInfo",
-            "EqualsToAttribute": "",
-            "UseValue": true,
-            "Value": "admin"
-          }
-        }
-      ],
-      "Name": "Bike"
-    }
-  ]
-}
+negative := {"Entities": [{
+	"ValidationRules": [{
+		"$Type": "DomainModels$ValidationRule",
+		"Attribute": "MyFirstModule.Bike.Name",
+		"Message": {
+			"$Type": "Texts$Text",
+			"Items": [{
+				"$Type": "Texts$Translation",
+				"LanguageCode": "en_US",
+				"Text": "Not a good name",
+			}],
+		},
+		"RuleInfo": {
+			"$Type": "DomainModels$EqualsToRuleInfo",
+			"EqualsToAttribute": "",
+			"UseValue": true,
+			"Value": "admin",
+		},
+	}],
+	"Name": "Bike",
+}]}
 
 # Test cases
 
 test_positive if {
-	allow with input as positive
+	avoid_using_validation_rules.allow with input as positive
 }
 
 test_negative if {
-	not allow with input as negative
+	not avoid_using_validation_rules.allow with input as negative
 }

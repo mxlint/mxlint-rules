@@ -1,0 +1,9 @@
+rules:
+  style:
+    prefer-some-in-iteration:
+      level: ignore
+
+  idiomatic:
+    directory-package-mismatch:
+      level: ignore
+  

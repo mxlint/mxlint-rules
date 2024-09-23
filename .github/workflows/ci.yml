@@ -8,6 +8,17 @@ on:
     branches: [ main ]
 
 jobs:
+  
+  Lint-Rego:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: StyraInc/setup-regal@v1
+      with:
+        version: latest
+
+    - name: Lint
+      run: regal lint --format=github ./rules
 
   Rules:
     runs-on: ubuntu-latest
