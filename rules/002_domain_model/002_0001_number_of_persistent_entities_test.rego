@@ -1,4 +1,4 @@
-package app.mendix.domain_model.number_of_entities
+package app.mendix.domain_model.number_of_persistent_entities
 import rego.v1
 
 
