@@ -5,7 +5,7 @@
 # authors:
 # - Bart Zantingh <bart.zantingh@nl.abnamro.com>
 # custom:
-#  category: Complexity
+#  category: Maintainability
 #  rulename: ComplexMicroflowsWithoutAnnotations
 #  severity: MEDIUM
 #  rulenumber: 005_0004
