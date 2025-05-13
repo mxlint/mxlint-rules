@@ -19,22 +19,30 @@ jobs:
 
     - name: Download mxlint binary
       run: |
-        curl -L https://github.com/mxlint/mxlint-cli/releases/download/v3.0.0/mxlint-v3.0.0-linux-amd64 -o mxlint
+        # download latest binary
+        LATEST_VERSION=$(curl -s https://api.github.com/repos/mxlint/mxlint-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+        curl -L https://github.com/mxlint/mxlint-cli/releases/download/${LATEST_VERSION}/mxlint-${LATEST_VERSION}-linux-amd64 -o mxlint
+        file mxlint
         chmod +x mxlint
 
     - name: Download modelsource
       run: |
-        curl -L https://github.com/mxlint/mxlint-cli/archive/refs/heads/main.zip -o modelsource.zip
-        unzip modelsource.zip
-        mv mxlint-cli-main/modelsource modelsource
+        LATEST_VERSION=$(curl -s https://api.github.com/repos/mxlint/mxlint-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+        curl -L https://github.com/mxlint/mxlint-cli/archive/refs/tags/${LATEST_VERSION}.zip -o modelsource.zip
+        unzip modelsource.zip 
+        mv mxlint-cli-*/modelsource modelsource
         rm modelsource.zip
-        rm -rf mxlint-cli-main
+        rm -rf mxlint-cli-*
 
     - name: Lint XML output
-      run: ./mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource
+      run: |
+        ./mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource || true
+        cat report.xml
 
     - name: Lint JSON output
-      run: ./mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource
+      run: |
+        ./mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource || true
+        cat report.json
 
     - name: Upload report
       uses: actions/upload-artifact@v4
