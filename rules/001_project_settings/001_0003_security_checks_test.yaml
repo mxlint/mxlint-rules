@@ -1,0 +1,16 @@
+TestCases:
+- name: allow
+  allow: true
+  input:
+    CheckSecurity: true
+    SecurityLevel: CheckEverything
+- name: no allow 1
+  allow: false
+  input:
+    CheckSecurity: false
+    SecurityLevel: CheckEverything
+- name: no allow 2
+  allow: false
+  input:
+    CheckSecurity: true
+    SecurityLevel: unknown

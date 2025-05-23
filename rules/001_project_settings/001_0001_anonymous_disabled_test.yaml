@@ -1,0 +1,9 @@
+TestCases:
+- name: allow
+  allow: true
+  input:
+    EnableGuestAccess: false
+- name: no allow
+  allow: false
+  input:
+    EnableGuestAccess: true

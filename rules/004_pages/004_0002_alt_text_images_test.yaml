@@ -1,0 +1,222 @@
+TestCases:
+- name: allow
+  allow: true
+  input:
+    FormCall:
+      $Type: Forms$LayoutCall
+      Arguments:
+      - $Type: Forms$FormCallArgument
+        Parameter: Atlas_Core.Atlas_Default.Main
+        Widgets:
+        - $Type: CustomWidgets$CustomWidget
+          Appearance:
+            $Type: Forms$Appearance
+            Class: ""
+            DesignProperties: null
+            DynamicClasses: ""
+            Style: ""
+          ConditionalEditabilitySettings: null
+          ConditionalVisibilitySettings: null
+          Editable: Always
+          LabelTemplate: null
+          Name: image1
+          Object:
+            $Type: CustomWidgets$WidgetObject
+            Properties:
+            - $Type: CustomWidgets$WidgetProperty
+              TypePointer:
+                Data: e12NqWmbhUetuUW5V7W8zQ==
+                Subtype: 0
+              Value:
+                $Type: CustomWidgets$WidgetValue
+                Action:
+                  $Type: Forms$NoAction
+                  DisabledDuringExecution: true
+                AttributeRef: null
+                DataSource: null
+                EntityRef: null
+                Expression: ""
+                Form: ""
+                Icon: null
+                Microflow: ""
+                Nanoflow: ""
+                Objects: null
+                PrimitiveValue: fullImage
+                Selection: None
+                SourceVariable: null
+                TextTemplate: null
+                TranslatableValue: null
+                TypePointer:
+                  Data: 7a6ZyL/KPk+Z8mdcy2NZSQ==
+                  Subtype: 0
+                Widgets: null
+                XPathConstraint: ""
+            - $Type: CustomWidgets$WidgetProperty
+              TypePointer:
+                Data: EL+2nhk2TkaOPEeEt2LX/Q==
+                Subtype: 0
+              Value:
+                $Type: CustomWidgets$WidgetValue
+                Action:
+                  $Type: Forms$NoAction
+                  DisabledDuringExecution: true
+                AttributeRef: null
+                DataSource: null
+                EntityRef: null
+                Expression: ""
+                Form: ""
+                Icon: null
+                Microflow: ""
+                Nanoflow: ""
+                Objects: null
+                PrimitiveValue: ""
+                Selection: None
+                SourceVariable: null
+                TextTemplate:
+                  $Type: Forms$ClientTemplate
+                  Fallback:
+                    $Type: Texts$Text
+                    Items: null
+                  Parameters: null
+                  Template:
+                    $Type: Texts$Text
+                    Items:
+                    - $Type: Texts$Translation
+                      LanguageCode: en_US
+                      Text: my description of the image
+- name: missing_alt_text_variation_1
+  allow: false
+  input:
+    FormCall:
+      $Type: Forms$LayoutCall
+      Arguments:
+      - $Type: Forms$FormCallArgument
+        Parameter: Atlas_Core.Atlas_Default.Main
+        Widgets:
+        - $Type: CustomWidgets$CustomWidget
+          Appearance:
+            $Type: Forms$Appearance
+            Class: ""
+            DesignProperties: null
+            DynamicClasses: ""
+            Style: ""
+          ConditionalEditabilitySettings: null
+          ConditionalVisibilitySettings: null
+          Editable: Always
+          LabelTemplate: null
+          Name: image1
+          Object:
+            $Type: CustomWidgets$WidgetObject
+            Properties:
+            - $Type: CustomWidgets$WidgetProperty
+              TypePointer:
+                Data: e12NqWmbhUetuUW5V7W8zQ==
+                Subtype: 0
+              Value:
+                $Type: CustomWidgets$WidgetValue
+                Action:
+                  $Type: Forms$NoAction
+                  DisabledDuringExecution: true
+                AttributeRef: null
+                DataSource: null
+                EntityRef: null
+                Expression: ""
+                Form: ""
+                Icon: null
+                Microflow: ""
+                Nanoflow: ""
+                Objects: null
+                PrimitiveValue: fullImage
+                Selection: None
+                SourceVariable: null
+                TextTemplate: null
+                TranslatableValue: null
+                TypePointer:
+                  Data: 7a6ZyL/KPk+Z8mdcy2NZSQ==
+                  Subtype: 0
+                Widgets: null
+                XPathConstraint: ""
+            - $Type: CustomWidgets$WidgetProperty
+              TypePointer:
+                Data: EL+2nhk2TkaOPEeEt2LX/Q==
+                Subtype: 0
+              Value:
+                $Type: CustomWidgets$WidgetValue
+                Action:
+                  $Type: Forms$NoAction
+                  DisabledDuringExecution: true
+                AttributeRef: null
+                DataSource: null
+                EntityRef: null
+                Expression: ""
+                Form: ""
+                Icon: null
+                Microflow: ""
+                Nanoflow: ""
+                Objects: null
+                PrimitiveValue: ""
+                Selection: None
+                SourceVariable: null
+                TextTemplate:
+                  $Type: Forms$ClientTemplate
+                  Fallback:
+                    $Type: Texts$Text
+                    Items: null
+                  Parameters: null
+                  Template:
+                    $Type: Texts$Text
+                    Items:
+                    - $Type: Texts$Translation
+                      LanguageCode: en_US
+- name: missing_alt_text_variation_2
+  allow: false
+  input:
+    FormCall:
+      $Type: Forms$LayoutCall
+      Arguments:
+      - $Type: Forms$FormCallArgument
+        Parameter: Atlas_Core.Atlas_Default.Main
+        Widgets:
+        - $Type: CustomWidgets$CustomWidget
+          Appearance:
+            $Type: Forms$Appearance
+            Class: ""
+            DesignProperties: null
+            DynamicClasses: ""
+            Style: ""
+          ConditionalEditabilitySettings: null
+          ConditionalVisibilitySettings: null
+          Editable: Always
+          LabelTemplate: null
+          Name: image1
+          Object:
+            $Type: CustomWidgets$WidgetObject
+            Properties:
+            - $Type: CustomWidgets$WidgetProperty
+              TypePointer:
+                Data: e12NqWmbhUetuUW5V7W8zQ==
+                Subtype: 0
+              Value:
+                $Type: CustomWidgets$WidgetValue
+                Action:
+                  $Type: Forms$NoAction
+                  DisabledDuringExecution: true
+                AttributeRef: null
+                DataSource: null
+                EntityRef: null
+                Expression: ""
+                Form: ""
+                Icon: null
+                Microflow: ""
+                Nanoflow: ""
+                Objects: null
+                PrimitiveValue: fullImage
+                Selection: None
+                SourceVariable: null
+                TextTemplate: null
+                TranslatableValue: null
+                TypePointer:
+                  Data: 7a6ZyL/KPk+Z8mdcy2NZSQ==
+                  Subtype: 0
+                Widgets: null
+                XPathConstraint: ""

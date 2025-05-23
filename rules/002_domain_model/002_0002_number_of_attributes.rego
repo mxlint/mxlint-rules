@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0002
 #  remediation: Normalize your datamodel. Split your object into multiple objects. If the attributes really belong to each other in a one-to-one relation, just draw a one-to-one relation between the objects.
-#  input: "*/DomainModels$DomainModel.yaml"
+#  input: ".*/DomainModels\\$DomainModel\\.yaml"
 package app.mendix.domain_model.number_of_attributes
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations
