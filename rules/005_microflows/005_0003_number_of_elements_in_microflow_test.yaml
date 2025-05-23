@@ -1,0 +1,49 @@
+TestCases:
+- name: allow microflow with less than 25 activities
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow_with_less_than_25_activities
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$StartEvent
+        - $Type: Microflows$EndEvent
+        - $Type: Microflows$ActionActivity
+
+- name: do not allow microflow with more than 25 activities
+  allow: false
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow_with_more_than_25_activities
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$StartEvent
+        - $Type: Microflows$EndEvent
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity

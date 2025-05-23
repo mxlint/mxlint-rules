@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 005_0002
 #  remediation: Consider committing objects outside the loop. Within the loop, add them to a list.
-#  input: "**/*$Microflow.yaml"
+#  input: ".*/*\\$Microflow\\.yaml"
 package app.mendix.microflows.commit_actions_with_a_loop
 
 import rego.v1

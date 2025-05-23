@@ -1,0 +1,40 @@
+TestCases:
+- name: allow 0 entities
+  allow: true
+  input:
+    Entities: null
+- name: allow 1 entity
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+- name: allow 2 entities
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+      - Name: Entity2
+- name: do not allow 20 entities
+  allow: false
+  input:
+    Entities:
+      - Name: Entity1
+      - Name: Entity2
+      - Name: Entity3
+      - Name: Entity4
+      - Name: Entity5
+      - Name: Entity6
+      - Name: Entity7
+      - Name: Entity8
+      - Name: Entity9
+      - Name: Entity10
+      - Name: Entity11
+      - Name: Entity12
+      - Name: Entity13
+      - Name: Entity14
+      - Name: Entity15
+      - Name: Entity16
+      - Name: Entity17
+      - Name: Entity18
+      - Name: Entity19
+      - Name: Entity20

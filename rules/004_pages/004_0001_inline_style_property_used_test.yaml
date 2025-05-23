@@ -1,0 +1,59 @@
+TestCases:
+- name: allow simple form without Style property
+  allow: true
+  input:
+    $Type: Forms$Page
+    Name: Page1
+    Appearance:
+      $Type: Forms$Appearance
+      Class: ""
+      DesignProperties: null
+      DynamicClasses: ""
+      Style: ""
+- name: do not allow simple form with Style property
+  allow: false
+  input:
+    $Type: Forms$Page
+    Name: Page1
+    Appearance:
+      Style: "color: red;"
+- name: allow nested form without Style property
+  allow: true
+  input:
+    $Type: Forms$Page
+    Name: Page1
+    FormCall:
+      Arguments:
+        - Widgets:
+            - $Type: Forms$LayoutGrid
+              Name: layoutGrid2
+              Rows:
+                - $Type: Forms$LayoutGridRow
+                  Columns:
+                    - $Type: Forms$LayoutGridColumn
+                      Appearance:
+                        $Type: Forms$Appearance
+                        Class: ""
+                        DesignProperties: null
+                        DynamicClasses: ""
+                        Style: ""
+- name: do not allow nested form with Style property
+  allow: false
+  input:
+    $Type: Forms$Page
+    Name: Page1
+    FormCall:
+      Arguments:
+        - Widgets:
+            - $Type: Forms$LayoutGrid
+              Name: layoutGrid2
+              Rows:
+                - $Type: Forms$LayoutGridRow
+                  Columns:
+                    - $Type: Forms$LayoutGridColumn
+                      Appearance:
+                        $Type: Forms$Appearance
+                        Class: ""
+                        DesignProperties: null
+                        DynamicClasses: ""
+                        Style: "color: orange;"

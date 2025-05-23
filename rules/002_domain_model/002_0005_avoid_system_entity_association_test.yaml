@@ -1,0 +1,25 @@
+TestCases:
+- name: allow no cross associations
+  allow: true
+  input:
+    CrossAssociations: null
+- name: do not allow cross association to System.FileDocument
+  allow: false
+  input:
+    CrossAssociations:
+      - Name: CrossAssociation1
+        Child: System.FileDocument
+- name: allow cross association to non System entitySomeModule.FileDocument
+  allow: true
+  input:
+    CrossAssociations:
+      - Name: CrossAssociation1
+        Child: SomeModule.FileDocument
+- name: do not allow cross association to System.FileDocument in multiple entities
+  allow: false
+  input:
+    CrossAssociations:
+      - Name: CrossAssociation1
+        Child: System.FileDocument
+      - Name: CrossAssociation2
+        Child: SomeModule.FileDocument

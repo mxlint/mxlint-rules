@@ -1,0 +1,21 @@
+TestCases:
+- name: allow no entities
+  allow: true
+  input:
+    Entities: null
+- name: allow inherit from System.FileDocument
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+        MaybeGeneralization:
+          Type: DomainModels$Generalization
+          Generalization: System.FileDocument
+- name: do not allow inherit from Administration.Account
+  allow: false
+  input:
+    Entities:
+      - Name: Entity1
+        MaybeGeneralization:
+          Type: DomainModels$Generalization
+          Generalization: Administration.Account

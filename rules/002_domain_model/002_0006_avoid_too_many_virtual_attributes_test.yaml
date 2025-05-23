@@ -1,0 +1,95 @@
+TestCases:
+- name: allow no entities
+  allow: true
+  input:
+    Entities: null
+- name: allow no virtual attributes
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes: null
+- name: allow 4 virtual attributes
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: VA_age
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: Year
+            Value:
+              $Type: DomainModels$StoredValue
+          - Name: Month
+            Value:
+              $Type: DomainModels$StoredValue
+          - Name: Day
+            Value:
+              $Type: DomainModels$StoredValue
+- name: do not allow 20 virtual attributes
+  allow: false
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: attr1
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr2
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr3
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr4
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr5
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr6
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr7
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr8
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr9
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr10
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr11
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr12
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr13
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr14
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr15
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr16
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr17
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr18
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr19
+            Value:
+              $Type: DomainModels$CalculatedValue
+          - Name: attr20
+            Value:
+              $Type: DomainModels$CalculatedValue

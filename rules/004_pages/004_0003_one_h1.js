@@ -9,7 +9,7 @@ const metadata = {
         severity: "HIGH",
         rulenumber: "004_0003",
         remediation: "Restructure the page to have only one h1 tag",
-        input: "Security$ProjectSecurity.yaml"
+        input: ".*/*\\.(Forms\\$Page|Forms\\$Snippet)\\.yaml"
     }
 };
 

@@ -1,0 +1,59 @@
+TestCases:
+- name: allow 0 attributes
+  allow: true
+  input:
+    Attributes: null
+- name: allow 1 attribute
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: Attribute1
+
+- name: do not allow 40 attributes
+  allow: false
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: Attribute1
+          - Name: Attribute2
+          - Name: Attribute3
+          - Name: Attribute4
+          - Name: Attribute5
+          - Name: Attribute6
+          - Name: Attribute7
+          - Name: Attribute8
+          - Name: Attribute9
+          - Name: Attribute10
+          - Name: Attribute11
+          - Name: Attribute12
+          - Name: Attribute13
+          - Name: Attribute14
+          - Name: Attribute15
+          - Name: Attribute16
+          - Name: Attribute17
+          - Name: Attribute18
+          - Name: Attribute19
+          - Name: Attribute20
+          - Name: Attribute21
+          - Name: Attribute22
+          - Name: Attribute23
+          - Name: Attribute24
+          - Name: Attribute25
+          - Name: Attribute26
+          - Name: Attribute27
+          - Name: Attribute28
+          - Name: Attribute29
+          - Name: Attribute30
+          - Name: Attribute31
+          - Name: Attribute32
+          - Name: Attribute33
+          - Name: Attribute34
+          - Name: Attribute35
+          - Name: Attribute36
+          - Name: Attribute37
+          - Name: Attribute38
+          - Name: Attribute39
+          - Name: Attribute40

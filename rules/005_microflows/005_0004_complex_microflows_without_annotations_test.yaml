@@ -1,0 +1,89 @@
+TestCases:
+- name: allow microflow with 1 exclusive split
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ExclusiveSplit
+
+- name: allow microflow with 2 actions and 2 exclusive splits
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$ExclusiveSplit
+
+- name: do not allow microflow with 11 actions and no annotations
+  allow: false
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+
+- name: allow microflow with 11 actions and annotations
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$ActionActivity
+        - $Type: Microflows$Annotation
+
+- name: do not allow microflow with 3 exclusive splits and no annotations
+  allow: false
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$ExclusiveSplit
+
+- name: allow microflow with 3 exclusive splits and annotations
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: Microflow
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$ExclusiveSplit
+        - $Type: Microflows$Annotation

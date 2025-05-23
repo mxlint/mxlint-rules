@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0006
 #  remediation: Optimize the number of virtual attributes inside of an entity. Reduce to 10 or less.
-#  input: "*/DomainModels$DomainModel.yaml"
+#  input: ".*/DomainModels\\$DomainModel\\.yaml"
 package app.mendix.domain_model.avoid_too_many_virtual_attributes
 
 import rego.v1

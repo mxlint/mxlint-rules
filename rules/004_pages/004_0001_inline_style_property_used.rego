@@ -10,7 +10,8 @@
 #  severity: MEDIUM
 #  rulenumber: 004_0001
 #  remediation: Use generic classes instead, defined by the theme.
-#  input: "**/*$Page.yaml"
+#  input: ".*/*\\.(Forms\\$Page|Forms\\$Snippet)\\.yaml"
+
 package app.mendix.pages.inline_style_property_used
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations
