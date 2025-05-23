@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 003_0001
 #  remediation: Consider a multi-app stategy to avoid creating one big (unmaintainable) monstrous application.
-#  input: "Metadata.yaml"
+#  input: "Metadata\\.yaml"
 package app.mendix.modules.number_of_modules
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

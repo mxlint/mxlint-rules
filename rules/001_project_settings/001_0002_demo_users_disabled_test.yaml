@@ -1,0 +1,9 @@
+TestCases:
+- name: allow
+  allow: true
+  input:
+    EnableDemoUsers: false
+- name: no allow
+  allow: false
+  input:
+    EnableDemoUsers: true

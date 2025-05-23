@@ -11,7 +11,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0001
 #  remediation: Split domain model into multiple modules.
-#  input: "*/DomainModels$DomainModel.yaml"
+#  input: ".*/DomainModels\\$DomainModel\\.yaml"
 package app.mendix.domain_model.number_of_persistent_entities
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

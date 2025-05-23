@@ -11,7 +11,7 @@
 #  priority: 5
 #  rulenumber: 001_0004
 #  remediation: Ensure minimum password length of at least 8 characters and must use all character classes.
-#  input: Security$ProjectSecurity.yaml
+#  input: ".*Security\\$ProjectSecurity\\.yaml"
 package app.mendix.project_settings.strong_password
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations
