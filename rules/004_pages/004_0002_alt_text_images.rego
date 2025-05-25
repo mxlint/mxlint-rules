@@ -22,7 +22,7 @@ allow if count(errors) == 0
 errors contains error if {
     # Find all CustomWidgets$WidgetObject with PrimitiveValue "fullImage"
     
-    walk(input, [path, widget])
+    walk(input, [_, widget])
     widget["$Type"] == "CustomWidgets$CustomWidget"
     
     widget.Object["$Type"] == "CustomWidgets$WidgetObject"
