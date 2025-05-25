@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Zip rules directory
-        run: zip -r rules.zip rules/ -x '*_test.rego'
+        run: zip -r rules.zip rules/ -x '*_test.rego' -x '*_test.yaml'
 
       - name: Create Tar.gz of rules directory
-        run: tar -czvf rules.tar.gz --exclude='*_test.rego' rules/
+        run: tar -czvf rules.tar.gz --exclude='*_test.rego' --exclude='*_test.yaml' rules/
 
       - name: Get release
         id: get_release
