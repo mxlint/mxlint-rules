@@ -17,31 +17,23 @@ jobs:
     - name: Run tests for rules
       run: ./scripts/run-policy-tests.sh
 
-    - name: Download mxlint binary
-      run: |
-        # download latest binary
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/mxlint/mxlint-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-        curl -L https://github.com/mxlint/mxlint-cli/releases/download/${LATEST_VERSION}/mxlint-${LATEST_VERSION}-linux-amd64 -o mxlint
-        file mxlint
-        chmod +x mxlint
-
-    - name: Download modelsource
+    - name: Download latest modelsource
       run: |
         LATEST_VERSION=$(curl -s https://api.github.com/repos/mxlint/mxlint-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
         curl -L https://github.com/mxlint/mxlint-cli/archive/refs/tags/${LATEST_VERSION}.zip -o modelsource.zip
         unzip modelsource.zip 
-        mv mxlint-cli-*/modelsource modelsource
+        mv mxlint-cli-*/resources/modelsource-v1 modelsource
         rm modelsource.zip
         rm -rf mxlint-cli-*
 
     - name: Lint XML output
       run: |
-        ./mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource || true
+        ./bin/mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource || true
         cat report.xml
 
     - name: Lint JSON output
       run: |
-        ./mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource || true
+        ./bin/mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource || true
         cat report.json
 
     - name: Upload report

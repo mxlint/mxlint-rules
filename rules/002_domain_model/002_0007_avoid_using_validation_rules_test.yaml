@@ -1,0 +1,14 @@
+TestCases:
+- name: allow no validation rules
+  allow: true
+  input:
+    Entities:
+      - Name: Bike
+        ValidationRules: null
+- name: do not allow validation rules
+  allow: false
+  input:
+    Entities:
+      - Name: Bike
+        ValidationRules:
+          - Attribute: MyFirstModule.Bike.Name

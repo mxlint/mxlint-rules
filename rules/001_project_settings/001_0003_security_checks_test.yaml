@@ -1,0 +1,16 @@
+TestCases:
+- name: allow security checks enabled
+  allow: true
+  input:
+    CheckSecurity: true
+    SecurityLevel: CheckEverything
+- name: do not allow security checks disabled
+  allow: false
+  input:
+    CheckSecurity: false
+    SecurityLevel: CheckEverything
+- name: do not allow unknown security level
+  allow: false
+  input:
+    CheckSecurity: true
+    SecurityLevel: unknown

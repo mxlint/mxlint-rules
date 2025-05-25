@@ -1,0 +1,9 @@
+TestCases:
+- name: allow AdminUserName is SystemAdmin
+  allow: true
+  input:
+    AdminUserName: SystemAdmin
+- name: do not allow MxAdmin as admin username
+  allow: false
+  input:
+    AdminUserName: MxAdmin

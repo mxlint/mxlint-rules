@@ -1,0 +1,78 @@
+TestCases:
+- name: allow loop without objects
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects: null
+
+- name: allow loop with change action without commit
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "No"
+
+- name: do not allow loop with commit action
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$CommitAction
+
+- name: do not allow loop with change action with commit
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "Yes"
+
+- name: do not allow loop with both commit and change actions
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$CommitAction
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "Yes"

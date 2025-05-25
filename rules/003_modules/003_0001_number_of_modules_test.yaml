@@ -1,0 +1,98 @@
+TestCases:
+- name: allow no modules
+  allow: true
+  input:
+    Modules: null
+- name: allow 1 module
+  allow: true
+  input:
+    Modules:
+     - Name: Module1
+       Attributes:
+         FromAppStore: false
+- name: allow 2 modules
+  allow: true
+  input:
+    Modules:
+     - Name: Module1
+       Attributes:
+         FromAppStore: false
+     - Name: Module2
+       Attributes:
+         FromAppStore: false
+- name: do not allow more than 30 modules
+  allow: false
+  input:
+    Modules:
+      - Name: Module1
+        Attributes:
+          FromAppStore: false
+      - Name: Module2
+        Attributes:
+          FromAppStore: false
+      - Name: Module3
+        Attributes:
+          FromAppStore: false
+      - Name: Module4
+        Attributes:
+          FromAppStore: false
+      - Name: Module5
+        Attributes:
+          FromAppStore: false
+      - Name: Module8
+        Attributes:
+          FromAppStore: false
+      - Name: Module9
+        Attributes:
+          FromAppStore: false
+      - Name: Module10
+        Attributes:
+          FromAppStore: false
+      - Name: Module11
+        Attributes:
+          FromAppStore: false
+      - Name: Module12
+        Attributes:
+          FromAppStore: false
+      - Name: Module13
+        Attributes:
+          FromAppStore: false
+      - Name: Module15
+        Attributes:
+          FromAppStore: false
+      - Name: Module16
+        Attributes:
+          FromAppStore: false
+      - Name: Module17
+        Attributes:
+          FromAppStore: false
+      - Name: Module18
+        Attributes:
+          FromAppStore: false
+      - Name: Module21
+        Attributes:
+          FromAppStore: false
+      - Name: Module22
+        Attributes:
+          FromAppStore: false
+      - Name: Module23
+        Attributes:
+          FromAppStore: false
+      - Name: Module24
+        Attributes:
+          FromAppStore: false
+      - Name: Module25
+        Attributes:
+          FromAppStore: false
+      - Name: Module27
+        Attributes:
+          FromAppStore: false
+      - Name: Module28
+        Attributes:
+          FromAppStore: false
+      - Name: Module29
+        Attributes:
+          FromAppStore: false
+      - Name: Module30
+        Attributes:
+          FromAppStore: false

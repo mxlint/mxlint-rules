@@ -1,0 +1,9 @@
+TestCases:
+- name: allow anonymous disabled
+  allow: true
+  input:
+    EnableGuestAccess: false
+- name: do not allow anonymous enabled
+  allow: false
+  input:
+    EnableGuestAccess: true

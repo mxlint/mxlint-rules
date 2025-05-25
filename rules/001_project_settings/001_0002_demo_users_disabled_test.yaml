@@ -1,0 +1,9 @@
+TestCases:
+- name: allow demo users disabled
+  allow: true
+  input:
+    EnableDemoUsers: false
+- name: do not allow demo users enabled
+  allow: false
+  input:
+    EnableDemoUsers: true
