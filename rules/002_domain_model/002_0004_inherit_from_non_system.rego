@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0004
 #  remediation: Instead of inheritance, just use separate objects which are associated to the main object. As an alternative, you can add the child’s attributes to the super entity and add an ObjectType enumeration.
-#  input: ".*/DomainModels\\$DomainModel\\.yaml"
+#  input: .*/DomainModels\$DomainModel\.yaml
 package app.mendix.domain_model.inherit_from_non_system
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 005_0004
 #  remediation: Add one or more annotations to explain the microflow.
-#  input: ".*/*\\$Microflow\\.yaml"
+#  input: .*\$Microflow\.yaml
 
 package app.mendix.microflows.complex_microflows_without_annotations
 

@@ -10,7 +10,7 @@
 #  severity: HIGH
 #  rulenumber: 001_0005
 #  remediation: Rename the mendix admin userid
-#  input: ".*Security\\$ProjectSecurity\\.yaml"
+#  input: .*Security\$ProjectSecurity\.yaml
 package app.mendix.project_settings.mxadmin_userid
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

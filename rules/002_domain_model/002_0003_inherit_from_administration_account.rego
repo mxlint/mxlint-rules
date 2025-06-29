@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0003
 #  remediation: Inherit from system.user instead or adapt Administration.Account so it fits your needs.
-#  input: ".*/DomainModels\\$DomainModel\\.yaml"
+#  input: .*/DomainModels\$DomainModel\.yaml
 package app.mendix.domain_model.inherit_from_administration_account
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

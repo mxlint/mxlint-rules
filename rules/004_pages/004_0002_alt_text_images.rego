@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: "004_0002"
 #  remediation: Set an alt text for the image
-#  input: ".*/*\\.(Forms\\$Page|Forms\\$Snippet)\\.yaml"
+#  input: .*\.(Forms\$Page|Forms\$Snippet)\.yaml
 
 package app.mendix.pages.images_with_alt_text
 import rego.v1

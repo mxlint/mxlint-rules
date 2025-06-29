@@ -10,7 +10,7 @@
 #  severity: HIGH
 #  rulenumber: 001_0002
 #  remediation: Disable demo users in Project Security
-#  input: ".*Security\\$ProjectSecurity\\.yaml"
+#  input: .*Security\$ProjectSecurity\.yaml
 package app.mendix.project_settings.demo_users_disabled
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

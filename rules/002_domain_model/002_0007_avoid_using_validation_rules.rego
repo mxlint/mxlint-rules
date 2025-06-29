@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 002_0007
 #  remediation: Remove datamodel validation rules.
-#  input: ".*/DomainModels\\$DomainModel\\.yaml"
+#  input: .*/DomainModels\$DomainModel\.yaml
 package app.mendix.domain_model.avoid_using_validation_rules
 
 import rego.v1

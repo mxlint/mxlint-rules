@@ -10,7 +10,7 @@
 #  severity: HIGH
 #  rulenumber: 002_0005
 #  remediation: Remove direct associations with the System Domain Model. Use inheritance instead (i.e. Generalization in the entity properties).
-#  input: ".*/DomainModels\\$DomainModel\\.yaml"
+#  input: .*/DomainModels\$DomainModel\.yaml
 package app.mendix.domain_model.avoid_system_entity_association
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations

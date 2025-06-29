@@ -10,7 +10,7 @@
 #  severity: MEDIUM
 #  rulenumber: 005_0003
 #  remediation: Split microflow into logical, functional elements.
-#  input: ".*/*\\$Microflow\\.yaml"
+#  input: .*\$Microflow\.yaml
 package app.mendix.microflows.number_of_elements_in_microflow
 
 import rego.v1

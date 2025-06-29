@@ -10,7 +10,7 @@
 #  severity: HIGH
 #  rulenumber: 001_0001
 #  remediation: Disable anonymous/guest access in Project Security
-#  input: ".*Security\\$ProjectSecurity\\.yaml"
+#  input: .*Security\$ProjectSecurity\.yaml
 package app.mendix.project_settings.anonymous_disabled
 import rego.v1
 annotation := rego.metadata.chain()[1].annotations
