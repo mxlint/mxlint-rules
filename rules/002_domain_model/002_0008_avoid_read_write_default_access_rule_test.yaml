@@ -1,0 +1,43 @@
+TestCases:
+  - name: allow readonly access
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Entity1
+          AccessRules:
+            - $Type: DomainModels$AccessRule
+              AllowCreate: false
+              AllowDelete: false
+              AllowedModuleRoles:
+                - MyFirstModule.User
+                - MyFirstModule.Admin
+              DefaultMemberAccessRights: ReadOnly
+  - name: allow none access
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Entity2
+          AccessRules:
+            - $Type: DomainModels$AccessRule
+              AllowCreate: false
+              AllowDelete: false
+              AllowedModuleRoles:
+                - MyFirstModule.User
+                - MyFirstModule.Admin
+              DefaultMemberAccessRights: None
+  - name: do not allow readwrite access
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Entity3
+          AccessRules:
+            - $Type: DomainModels$AccessRule
+              AllowCreate: false
+              AllowDelete: false
+              AllowedModuleRoles:
+                - MyFirstModule.User
+                - MyFirstModule.Admin
+              DefaultMemberAccessRights: ReadWrite
