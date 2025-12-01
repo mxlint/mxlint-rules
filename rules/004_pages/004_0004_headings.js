@@ -7,7 +7,7 @@ const metadata = {
         category: "Accessibility",
         rulename: "HeadingsInAscendingOrder",
         severity: "HIGH",
-        rulenumber: "004_0003",
+        rulenumber: "004_0004",
         remediation: "Restructure the page to have headings in ascending order",
         input: ".*/*\\.(Forms\\$Page|Forms\\$Snippet)\\.yaml"
     }
