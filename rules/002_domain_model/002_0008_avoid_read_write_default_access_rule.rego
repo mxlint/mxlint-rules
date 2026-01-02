@@ -24,12 +24,21 @@ allow if count(errors) == 0
 errors contains error if {
 	entity := input.Entities[_]
 	entity_name := entity.Name
-	roles := entity.AccessRules[_].AllowedModuleRoles
-	role_names := [name | role := roles[_]; parts := split(role, "."); name := parts[count(parts) - 1]]
-	roles_list := concat(", ", role_names)
 
-	# Check for ReadWrite access
-	entity.AccessRules[_].DefaultMemberAccessRights == "ReadWrite"
+	# Bind the specific access rule we are evaluating
+	access_rule := entity.AccessRules[_]
+
+	# Only consider access rules with ReadWrite default rights
+	access_rule.DefaultMemberAccessRights == "ReadWrite"
+
+	# Now collect roles only from THIS access_rule
+	roles := access_rule.AllowedModuleRoles
+	role_names := [name |
+		role := roles[_]
+		parts := split(role, ".")
+		name := parts[count(parts) - 1]
+	]
+	roles_list := concat(", ", role_names)
 
 	error := sprintf(
 		"[%v, %v, %v] ReadWrite access rules found in entity %v for roles %v",
