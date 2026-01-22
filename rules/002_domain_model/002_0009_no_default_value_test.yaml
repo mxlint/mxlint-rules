@@ -1,0 +1,23 @@
+TestCases:
+- name: allow attributes with no default value or empty/null default value
+  allow: true
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: Attr1
+          - Name: Attr2
+            Value:
+              DefaultValue: null
+          - Name: Attr3
+            Value:
+              DefaultValue: ""
+- name: deny attribute with a default value set
+  allow: false
+  input:
+    Entities:
+      - Name: Entity1
+        Attributes:
+          - Name: Attr1
+            Value:
+              DefaultValue: "0"

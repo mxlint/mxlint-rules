@@ -1,0 +1,16 @@
+TestCases:
+- name: allow not exposed with sensitive name
+  allow: true
+  input:
+    ExposedToClient: false
+    Name: CST_TestConstant_password
+- name: allow not exposed without sensitive name
+  allow: true
+  input:
+    ExposedToClient: false
+    Name: CST_TestConstant
+- name: deny exposed with sensitive name
+  allow: false
+  input:
+    ExposedToClient: true
+    Name: CST_TestConstant_Id
