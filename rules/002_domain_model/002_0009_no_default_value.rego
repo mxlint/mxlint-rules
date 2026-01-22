@@ -24,30 +24,17 @@ default allow := false
 allow if count(errors) == 0
 
 # A default value is considered "set" if it exists AND it is not the empty string.
-default_value_is_set(default_value) if {
+has_default_value(default_value) if {
   default_value != null
-  not is_empty_string(default_value)
-}
-
-# Checks whether a value is exactly an empty string.
-is_empty_string(value) if {
-  is_string(value)
-  value == ""
+  default_value != ""
 }
 
 # Emit an error for each attribute that defines a DefaultValue.
 errors contains error_message if {
-  some entity_index
-  some attribute_index
 
-  entity := input.Entities[entity_index]
-  attribute := entity.Attributes[attribute_index]
-
-  # In the DomainModel yaml, DefaultValue is nested under Value
-  stored_value := object.get(attribute, "Value", {})
-  default_value := object.get(stored_value, "DefaultValue", null)
-
-  default_value_is_set(default_value)
+  some entity in input.Entities
+  some attribute in entity.Attributes
+  has_default_value(attribute.Value.DefaultValue)
 
   error_message := sprintf("[%v, %v, %v] %v.%v has a default value set",
     [
