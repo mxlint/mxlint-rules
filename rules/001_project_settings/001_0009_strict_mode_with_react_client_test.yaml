@@ -1,0 +1,28 @@
+TestCases:
+  - name: allow when UseOptimizedClient is false
+    allow: true
+    input:
+      UseOptimizedClient: false
+    files:
+      "Security$ProjectSecurity.yaml":
+        StrictMode: false
+  - name: allow when both UseOptimizedClient and StrictMode are true
+    allow: true
+    input:
+      UseOptimizedClient: true
+    files:
+      "Security$ProjectSecurity.yaml":
+        StrictMode: true
+  - name: do not allow UseOptimizedClient true but StrictMode false
+    allow: false
+    input:
+      UseOptimizedClient: true
+    files:
+      "Security$ProjectSecurity.yaml":
+        StrictMode: false
+  - name: do not allow UseOptimizedClient true but StrictMode missing
+    allow: false
+    input:
+      UseOptimizedClient: true
+    files:
+      "Security$ProjectSecurity.yaml": {}
