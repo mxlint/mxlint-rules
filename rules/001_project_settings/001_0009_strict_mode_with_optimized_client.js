@@ -2,8 +2,7 @@ const metadata = {
     scope: "package",
     title: "Ensure strict mode is enabled when using the React client",
     description: "When React is enabled in Project Settings, StrictMode must also be enabled in Project Security for security and stability",
-    authors:
-      - Jurre Tanja <jurre.tanja@siemens.com>
+    authors: ["Jurre Tanja <jurre.tanja@siemens.com>"],
     custom: {
         category: "Security",
         rulename: "StrictModeWithOptimizedClient",
