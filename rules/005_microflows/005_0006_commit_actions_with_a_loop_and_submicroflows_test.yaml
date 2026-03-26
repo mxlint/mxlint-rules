@@ -1,0 +1,250 @@
+TestCases:
+- name: allow loop without objects
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects: null
+
+- name: allow loop with change action without commit
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "No"
+
+- name: do not allow loop with commit action
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$CommitAction
+
+- name: do not allow loop with change action with commit
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "Yes"
+
+- name: do not allow loop with both commit and change actions
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowForLoop
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$CommitAction
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$ChangeAction
+                  Commit: "Yes"
+
+- name: allow loop with submicroflow call that has no commits
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowWithSubmicroflowCall
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowName: HelperModule.SafeSubmicroflow
+  files:
+    "HelperModule.SafeSubmicroflow$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SafeSubmicroflow
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$LogMessage
+
+- name: do not allow loop with submicroflow call that contains commit
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowWithSubmicroflowCall
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowName: HelperModule.CommitSubmicroflow
+  files:
+    "HelperModule.CommitSubmicroflow$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: CommitSubmicroflow
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$CommitAction
+
+- name: do not allow nested submicroflow calls with commit deep in chain
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MainMicroflow
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowName: Module1.SubmicroflowA
+  files:
+    "Module1.SubmicroflowA$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SubmicroflowA
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$MicroflowCallAction
+                    MicroflowName: Module2.SubmicroflowB
+    "Module2.SubmicroflowB$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SubmicroflowB
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$ChangeAction
+                    Commit: "Yes"
+
+- name: do not allow submicroflow with commit outside of loop
+  allow: false
+  input:
+    $Type: Microflow$Microflow
+    Name: MicroflowWithSubmicroflowCall
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowName: Module.SubmicroflowWithCommitOutsideLoop
+  files:
+    "Module.SubmicroflowWithCommitOutsideLoop$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SubmicroflowWithCommitOutsideLoop
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$CommitAction
+
+- name: allow loop with submicroflow call chain with no commits
+  allow: true
+  input:
+    $Type: Microflow$Microflow
+    Name: MainMicroflow
+    MainFunction:
+      - Attributes:
+          $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowName: Module1.SubmicroflowA
+  files:
+    "Module1.SubmicroflowA$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SubmicroflowA
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$MicroflowCallAction
+                    MicroflowName: Module2.SubmicroflowB
+    "Module2.SubmicroflowB$Microflow.yaml":
+      $Type: Microflow$Microflow
+      Name: SubmicroflowB
+      MainFunction:
+        - Attributes:
+            $Type: Microflows$ActionActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$LogMessage
