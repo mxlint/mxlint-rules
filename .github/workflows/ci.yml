@@ -26,15 +26,26 @@ jobs:
         rm modelsource.zip
         rm -rf mxlint-cli-*
 
-    - name: Lint XML output
+    - name: Lint report
       run: |
-        ./bin/mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource || true
-        cat report.xml
+        mkdir -p .ci
+        cat > .ci/lint.yaml << 'EOF'
+        rules:
+          path: ./rules
+        modelsource: ./modelsource
+        lint:
+          xunitReport: report.xml
+          jsonFile: report.json
+        EOF
+        ./bin/mxlint --config .ci/lint.yaml lint
 
-    - name: Lint JSON output
+    - name: Check XML output
       run: |
-        ./bin/mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource || true
-        cat report.json
+        [ -f report.xml ] && cat report.xml || echo "report.xml was not generated"
+
+    - name: Check JSON output
+      run: |
+        [ -f report.json ] && cat report.json || echo "report.json was not generated"
 
     - name: Upload report
       uses: actions/upload-artifact@v4
