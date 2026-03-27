@@ -26,14 +26,35 @@ jobs:
         rm modelsource.zip
         rm -rf mxlint-cli-*
 
-    - name: Lint XML output
+    - name: Lint report
       run: |
-        ./bin/mxlint lint --xunit-report report.xml --rules ./rules --modelsource ./modelsource || true
+        mkdir -p .ci
+        cat > .ci/lint.yaml << 'EOF'
+        rules:
+          path: ./rules
+        modelsource: ./modelsource
+        lint:
+          xunitReport: report.xml
+          jsonFile: report.json
+        EOF
+        ./bin/mxlint --config .ci/lint.yaml lint || true
+
+    - name: Check XML output
+      run: |
+        if [ ! -f report.xml ]; then
+          echo "report.xml was not generated"
+          exit 1
+        fi
+        python3 -c "import xml.etree.ElementTree as ET; ET.parse('report.xml')"
         cat report.xml
 
-    - name: Lint JSON output
+    - name: Check JSON output
       run: |
-        ./bin/mxlint lint --json-file report.json --rules ./rules --modelsource ./modelsource || true
+        if [ ! -f report.json ]; then
+          echo "report.json was not generated"
+          exit 1
+        fi
+        python3 -c "import json; json.load(open('report.json'))"
         cat report.json
 
     - name: Upload report
