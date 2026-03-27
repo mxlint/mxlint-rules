@@ -41,11 +41,21 @@ jobs:
 
     - name: Check XML output
       run: |
-        [ -f report.xml ] && cat report.xml || echo "report.xml was not generated"
+        if [ ! -f report.xml ]; then
+          echo "report.xml was not generated"
+          exit 1
+        fi
+        python3 -c "import xml.etree.ElementTree as ET; ET.parse('report.xml')"
+        cat report.xml
 
     - name: Check JSON output
       run: |
-        [ -f report.json ] && cat report.json || echo "report.json was not generated"
+        if [ ! -f report.json ]; then
+          echo "report.json was not generated"
+          exit 1
+        fi
+        python3 -c "import json; json.load(open('report.json'))"
+        cat report.json
 
     - name: Upload report
       uses: actions/upload-artifact@v4
