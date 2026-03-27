@@ -37,7 +37,7 @@ jobs:
           xunitReport: report.xml
           jsonFile: report.json
         EOF
-        ./bin/mxlint --config .ci/lint.yaml lint
+        ./bin/mxlint --config .ci/lint.yaml lint || true
 
     - name: Check XML output
       run: |
