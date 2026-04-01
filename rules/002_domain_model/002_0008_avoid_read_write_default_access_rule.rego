@@ -3,7 +3,7 @@
 # title: Avoid using default read write access
 # description: This can lead to wrong set access rights
 # authors:
-# - Jurre Tanja <jurre.tanja@mendix.com>
+# - Jurre Tanja <jurre.tanja@siemens.com>
 # - Bart Zantingh <bart.zantingh@nl.abnamro.com>
 # related_resources:
 # - https://docs.mendix.com/refguide/access-rules/
