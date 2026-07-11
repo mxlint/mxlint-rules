@@ -1,0 +1,16 @@
+TestCases:
+  - name: allow CheckEverything
+    allow: true
+    input:
+      $Type: Security$ProjectSecurity
+      SecurityLevel: CheckEverything
+  - name: do not allow CheckNothing
+    allow: false
+    input:
+      $Type: Security$ProjectSecurity
+      SecurityLevel: CheckNothing
+  - name: do not allow CheckSecurity
+    allow: false
+    input:
+      $Type: Security$ProjectSecurity
+      SecurityLevel: CheckSecurity

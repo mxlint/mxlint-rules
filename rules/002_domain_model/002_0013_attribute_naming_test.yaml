@@ -1,0 +1,46 @@
+TestCases:
+  - name: allow PascalCase attributes
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Order
+          Attributes:
+            - $Type: DomainModels$Attribute
+              Name: OrderDate
+            - $Type: DomainModels$Attribute
+              Name: TotalAmount
+  - name: allow entity without attributes
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Empty
+          Attributes: []
+  - name: do not allow snake_case attribute
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Order
+          Attributes:
+            - $Type: DomainModels$Attribute
+              Name: order_date
+  - name: do not allow attribute starting with lowercase
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Order
+          Attributes:
+            - $Type: DomainModels$Attribute
+              Name: totalAmount
+  - name: do not allow attribute with leading underscore
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Order
+          Attributes:
+            - $Type: DomainModels$Attribute
+              Name: _Internal
