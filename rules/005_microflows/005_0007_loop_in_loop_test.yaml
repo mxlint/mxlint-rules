@@ -1,0 +1,51 @@
+TestCases:
+  - name: allow microflow with a single loop
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$ChangeAction
+  - name: allow microflow with two sequential (non-nested) loops
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+  - name: do not allow a loop nested inside another loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$LoopedActivity
+                  ObjectCollection:
+                    $Type: Microflows$MicroflowObjectCollection
+                    Objects:
+                      - $Type: Microflows$ActionActivity

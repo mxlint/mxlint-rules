@@ -1,0 +1,65 @@
+TestCases:
+  - name: allow commit action with events
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$CommitAction
+              WithEvents: true
+  - name: allow change action committing with events
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$ChangeAction
+              Commit: "Yes"
+  - name: do not allow commit action without events
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$CommitAction
+              WithEvents: false
+  - name: do not allow change action committing without events
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$ChangeAction
+              Commit: "YesWithoutEvents"
+  - name: do not allow commit without events inside a loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$CommitAction
+                    WithEvents: false

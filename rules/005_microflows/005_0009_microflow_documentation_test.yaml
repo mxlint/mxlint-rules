@@ -1,0 +1,69 @@
+TestCases:
+  - name: allow simple microflow without documentation
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: SmallFlow
+      Documentation: ""
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+  - name: allow complex microflow with documentation
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: BigDocumentedFlow
+      Documentation: "This flow orchestrates the order processing."
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+  - name: do not allow complex microflow without documentation
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: BigUndocumentedFlow
+      Documentation: ""
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+  - name: do not allow complex microflow with whitespace-only documentation
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: WhitespaceDocFlow
+      Documentation: "   "
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity
+          - $Type: Microflows$ActionActivity

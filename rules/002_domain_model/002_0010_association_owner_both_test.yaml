@@ -1,0 +1,37 @@
+TestCases:
+  - name: allow domain model without associations
+    allow: true
+    input:
+      Associations: null
+      CrossAssociations: null
+  - name: allow association owned by Default
+    allow: true
+    input:
+      Associations:
+        - $Type: DomainModels$Association
+          Name: Order_Customer
+          Owner: Default
+  - name: do not allow association owned by Both
+    allow: false
+    input:
+      Associations:
+        - $Type: DomainModels$Association
+          Name: Order_Product
+          Owner: Both
+  - name: do not allow cross association owned by Both
+    allow: false
+    input:
+      CrossAssociations:
+        - $Type: DomainModels$CrossAssociation
+          Name: Order_ExternalTag
+          Owner: Both
+  - name: allow mix with only Default owners
+    allow: true
+    input:
+      Associations:
+        - $Type: DomainModels$Association
+          Name: Order_Customer
+          Owner: Default
+        - $Type: DomainModels$Association
+          Name: Order_Line
+          Owner: Default

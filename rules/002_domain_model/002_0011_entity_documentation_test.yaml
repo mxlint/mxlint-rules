@@ -1,0 +1,49 @@
+TestCases:
+  - name: allow small entity without documentation
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: SmallEntity
+          Documentation: ""
+          Attributes:
+            - $Type: DomainModels$Attribute
+              Name: Attr1
+            - $Type: DomainModels$Attribute
+              Name: Attr2
+  - name: allow large entity with documentation
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: BigDocumentedEntity
+          Documentation: "Holds customer master data."
+          Attributes:
+            - {Name: A1}
+            - {Name: A2}
+            - {Name: A3}
+            - {Name: A4}
+            - {Name: A5}
+            - {Name: A6}
+            - {Name: A7}
+            - {Name: A8}
+            - {Name: A9}
+            - {Name: A10}
+  - name: do not allow large entity without documentation
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: BigUndocumentedEntity
+          Documentation: ""
+          Attributes:
+            - {Name: A1}
+            - {Name: A2}
+            - {Name: A3}
+            - {Name: A4}
+            - {Name: A5}
+            - {Name: A6}
+            - {Name: A7}
+            - {Name: A8}
+            - {Name: A9}
+            - {Name: A10}
