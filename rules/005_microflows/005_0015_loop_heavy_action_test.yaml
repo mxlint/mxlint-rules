@@ -1,0 +1,58 @@
+TestCases:
+  - name: allow retrieve outside of a loop
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+  - name: allow loop with only lightweight actions
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$ChangeAction
+                    Commit: "No"
+  - name: do not allow retrieve inside a loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$RetrieveAction
+  - name: do not allow microflow call inside a loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$MicroflowCallAction
