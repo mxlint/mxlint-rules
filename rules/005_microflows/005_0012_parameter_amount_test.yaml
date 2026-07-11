@@ -1,0 +1,46 @@
+TestCases:
+  - name: allow microflow with few parameters
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$StartEvent
+          - $Type: Microflows$MicroflowParameter
+            Name: Param0
+          - $Type: Microflows$MicroflowParameter
+            Name: Param1
+          - $Type: Microflows$MicroflowParameter
+            Name: Param2
+  - name: allow microflow with no parameters
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$StartEvent
+  - name: do not allow microflow with too many parameters
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$StartEvent
+          - $Type: Microflows$MicroflowParameter
+            Name: Param0
+          - $Type: Microflows$MicroflowParameter
+            Name: Param1
+          - $Type: Microflows$MicroflowParameter
+            Name: Param2
+          - $Type: Microflows$MicroflowParameter
+            Name: Param3
+          - $Type: Microflows$MicroflowParameter
+            Name: Param4
+          - $Type: Microflows$MicroflowParameter
+            Name: Param5

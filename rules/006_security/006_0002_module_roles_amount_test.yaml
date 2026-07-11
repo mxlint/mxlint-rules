@@ -1,0 +1,26 @@
+TestCases:
+  - name: allow module with few roles
+    allow: true
+    input:
+      $Type: Security$ModuleSecurity
+      ModuleRoles:
+        - $Type: Security$ModuleRole
+          Name: User
+        - $Type: Security$ModuleRole
+          Name: Admin
+  - name: allow module with no roles
+    allow: true
+    input:
+      $Type: Security$ModuleSecurity
+      ModuleRoles: []
+  - name: do not allow module with too many roles
+    allow: false
+    input:
+      $Type: Security$ModuleSecurity
+      ModuleRoles:
+        - {Name: Role1}
+        - {Name: Role2}
+        - {Name: Role3}
+        - {Name: Role4}
+        - {Name: Role5}
+        - {Name: Role6}
