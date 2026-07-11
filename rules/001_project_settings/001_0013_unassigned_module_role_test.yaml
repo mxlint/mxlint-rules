@@ -1,0 +1,26 @@
+TestCases:
+  - name: allow when all defined module roles are assigned
+    allow: true
+    input:
+      $Type: Security$ProjectSecurity
+      UserRoles:
+        - $Type: Security$UserRole
+          Name: Administrator
+          ModuleRoles:
+            - ModuleA.User
+            - ModuleA.Admin
+            - ModuleB.Manager
+  - name: do not allow when a module role is unassigned
+    allow: false
+    input:
+      $Type: Security$ProjectSecurity
+      UserRoles:
+        - $Type: Security$UserRole
+          Name: User
+          ModuleRoles:
+            - ModuleA.User
+  - name: do not allow when there are no user roles at all
+    allow: false
+    input:
+      $Type: Security$ProjectSecurity
+      UserRoles: []

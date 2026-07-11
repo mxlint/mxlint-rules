@@ -28,8 +28,18 @@ if [ ! -f "$MXLINT" ]; then
 
 fi
 
+# test-rules reads the rules path from the config (the --rules flag was removed
+# in newer mxlint-cli releases), so point it at ./rules via a temporary config.
+CONFIG_FILE="$(mktemp)"
+cat > "$CONFIG_FILE" << 'EOF'
+rules:
+  path: ./rules
+EOF
+
 # capture all output to a file with tee
-$MXLINT test-rules --rules ./rules 2>&1 | tee /tmp/mxlint-test-rules.log
+$MXLINT test-rules --config "$CONFIG_FILE" 2>&1 | tee /tmp/mxlint-test-rules.log
+
+rm -f "$CONFIG_FILE"
 
 # grep for FAIL in the log file
 if grep -q "FAIL" /tmp/mxlint-test-rules.log; then

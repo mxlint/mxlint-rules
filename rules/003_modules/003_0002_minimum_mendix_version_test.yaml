@@ -1,0 +1,17 @@
+TestCases:
+  - name: allow current Mendix version
+    allow: true
+    input:
+      ProductVersion: 10.24.16.96987
+  - name: allow minimum supported version
+    allow: true
+    input:
+      ProductVersion: 9.24.2.1234
+  - name: do not allow Mendix 7
+    allow: false
+    input:
+      ProductVersion: 7.23.5.100
+  - name: do not allow Mendix 6
+    allow: false
+    input:
+      ProductVersion: 6.10.0.500

@@ -1,0 +1,40 @@
+TestCases:
+  - name: allow split with a caption
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExclusiveSplit
+            Caption: "Is blocked?"
+  - name: allow microflow without splits
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+  - name: do not allow split without caption
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExclusiveSplit
+            Caption: ""
+  - name: do not allow inclusive split with whitespace caption
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$InclusiveSplit
+            Caption: "   "

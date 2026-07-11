@@ -1,0 +1,21 @@
+TestCases:
+  - name: allow enumeration with ENU prefix
+    allow: true
+    input:
+      $Type: Enumerations$Enumeration
+      Name: ENU_Status
+  - name: allow enumeration named ENUM prefix
+    allow: true
+    input:
+      $Type: Enumerations$Enumeration
+      Name: ENUMStatus
+  - name: do not allow enumeration without prefix
+    allow: false
+    input:
+      $Type: Enumerations$Enumeration
+      Name: EnumerationStatus
+  - name: do not allow enumeration with different prefix
+    allow: false
+    input:
+      $Type: Enumerations$Enumeration
+      Name: E_Status

@@ -1,0 +1,37 @@
+TestCases:
+  - name: allow rollback error handling
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+              ErrorHandlingType: Rollback
+  - name: allow custom error handling
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+              ErrorHandlingType: Custom
+  - name: do not allow continue error handling
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+              ErrorHandlingType: Continue

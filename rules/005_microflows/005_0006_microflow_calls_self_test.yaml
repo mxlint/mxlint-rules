@@ -1,0 +1,61 @@
+TestCases:
+  - name: allow microflow calling a different microflow
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$MicroflowCallAction
+              MicroflowCall:
+                $Type: Microflows$MicroflowCall
+                Microflow: MyModule.OtherFlow
+  - name: allow microflow with a call sharing a suffix but not the full name
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$MicroflowCallAction
+              MicroflowCall:
+                $Type: Microflows$MicroflowCall
+                Microflow: MyModule.DoMyFlow
+  - name: do not allow microflow that calls itself directly
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$MicroflowCallAction
+              MicroflowCall:
+                $Type: Microflows$MicroflowCall
+                Microflow: MyModule.MyFlow
+  - name: do not allow microflow that calls itself inside a loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$MicroflowCallAction
+                    MicroflowCall:
+                      $Type: Microflows$MicroflowCall
+                      Microflow: MyModule.MyFlow

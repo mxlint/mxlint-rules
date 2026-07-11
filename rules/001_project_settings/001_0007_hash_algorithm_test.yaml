@@ -1,0 +1,25 @@
+TestCases:
+  - name: allow BCrypt hash algorithm
+    allow: true
+    input:
+      Settings:
+        $Type: Settings$ModelSettings
+        HashAlgorithm: BCrypt
+  - name: allow SSHA256 hash algorithm
+    allow: true
+    input:
+      Settings:
+        $Type: Settings$ModelSettings
+        HashAlgorithm: SSHA256
+  - name: do not allow SHA256 hash algorithm
+    allow: false
+    input:
+      Settings:
+        $Type: Settings$ModelSettings
+        HashAlgorithm: SHA256
+  - name: do not allow MD5 hash algorithm
+    allow: false
+    input:
+      Settings:
+        $Type: Settings$ModelSettings
+        HashAlgorithm: MD5

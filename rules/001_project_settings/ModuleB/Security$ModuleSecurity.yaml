@@ -1,0 +1,5 @@
+# Fixture for 001_0013_unassigned_module_role_test.yaml (ignored by rule scanner).
+$Type: Security$ModuleSecurity
+ModuleRoles:
+    - $Type: Security$ModuleRole
+      Name: Manager

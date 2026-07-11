@@ -1,0 +1,56 @@
+TestCases:
+  - name: allow exposed microflow that applies entity access
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      AllowedModuleRoles:
+        - MyModule.User
+      ApplyEntityAccess: true
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+  - name: allow non-exposed microflow without entity access
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      AllowedModuleRoles: []
+      ApplyEntityAccess: false
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+  - name: allow exposed microflow without database operations
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      AllowedModuleRoles:
+        - MyModule.User
+      ApplyEntityAccess: false
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$LogMessageAction
+  - name: do not allow exposed microflow with db action and no entity access
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      AllowedModuleRoles:
+        - MyModule.User
+      ApplyEntityAccess: false
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction

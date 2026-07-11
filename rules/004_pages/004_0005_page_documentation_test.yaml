@@ -1,0 +1,19 @@
+TestCases:
+  - name: allow documented page
+    allow: true
+    input:
+      $Type: Forms$Page
+      Name: Order_Overview
+      Documentation: "Shows all open orders for the current user."
+  - name: do not allow page without documentation
+    allow: false
+    input:
+      $Type: Forms$Page
+      Name: Order_Overview
+      Documentation: ""
+  - name: do not allow page with whitespace-only documentation
+    allow: false
+    input:
+      $Type: Forms$Page
+      Name: Order_Detail
+      Documentation: "   "

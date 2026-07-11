@@ -1,0 +1,26 @@
+TestCases:
+  - name: allow single session per user
+    allow: true
+    input:
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Settings$ModelSettings
+          AllowUserMultipleSessions: false
+          HashAlgorithm: BCrypt
+  - name: do not allow multiple sessions per user
+    allow: false
+    input:
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Settings$ModelSettings
+          AllowUserMultipleSessions: true
+          HashAlgorithm: BCrypt
+  - name: allow when other settings parts present but model settings ok
+    allow: true
+    input:
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Forms$WebUIProjectSettingsPart
+          UseOptimizedClient: "No"
+        - $Type: Settings$ModelSettings
+          AllowUserMultipleSessions: false

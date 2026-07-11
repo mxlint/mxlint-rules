@@ -1,0 +1,40 @@
+TestCases:
+  - name: allow no entities
+    allow: true
+    input:
+      Entities: null
+  - name: allow entity without generalization
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: Standalone
+          MaybeGeneralization:
+            $Type: DomainModels$NoGeneralization
+  - name: allow entity inheriting directly from System
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: MyDocument
+          MaybeGeneralization:
+            $Type: DomainModels$Generalization
+            Generalization: System.FileDocument
+  - name: allow inheritance of two levels
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: TwoLevels
+          MaybeGeneralization:
+            $Type: DomainModels$Generalization
+            Generalization: Inheritance.Middle
+  - name: do not allow inheritance of three levels
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: ThreeLevels
+          MaybeGeneralization:
+            $Type: DomainModels$Generalization
+            Generalization: Inheritance.Leaf

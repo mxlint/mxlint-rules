@@ -1,0 +1,59 @@
+TestCases:
+  - name: allow one exclusive split with no nested ifs
+    allow: true
+    input:
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExpressionSplitCondition
+            Caption: no nested ifs
+            SplitCondition:
+              Expression: "if $Variable then a else b"
+  - name: allow multiple exclusive splits with no nested ifs
+    allow: true
+    input:
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExpressionSplitCondition
+            Caption: ex split 1 with no nested ifs
+            SplitCondition:
+              Expression: "if $Variable then a else b"
+          - $Type: Microflows$ExpressionSplitCondition
+            Caption: ex split 2 with no nested ifs
+            SplitCondition:
+              Expression: "if $Variable then c else d"
+  - name: do not allow exclusive split with else-if
+    allow: false
+    input:
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExclusiveSplit
+            Caption: ex split with else-if
+            SplitCondition:
+              Expression: "if true then\n\tfalse\nelse if false then\n\ttrue\nelse false"
+  - name: do not allow exclusive split with then-if
+    allow: false
+    input:
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExclusiveSplit
+            Caption: ex split with then-if
+            SplitCondition:
+              Expression: "if a then if b then c else d else e"
+  - name: do not allow multiple exclusive splits with one nested if
+    allow: false
+    input:
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ExclusiveSplit
+            Caption: no nested ifs
+            SplitCondition:
+              Expression: "if $Variable then a else b"
+          - $Type: Microflows$ExclusiveSplit
+            Caption: ex split with then-if
+            SplitCondition:
+              Expression: "if a then b else if c then d else e"

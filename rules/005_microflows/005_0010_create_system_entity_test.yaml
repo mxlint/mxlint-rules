@@ -1,0 +1,55 @@
+TestCases:
+  - name: allow creating a non-system entity
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$CreateChangeAction
+              Entity: MyModule.Customer
+  - name: allow retrieving a system entity
+    allow: true
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$RetrieveAction
+              RetrieveSource:
+                $Type: Microflows$DatabaseRetrieveSource
+                Entity: System.User
+  - name: do not allow creating System.User
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$ActionActivity
+            Action:
+              $Type: Microflows$CreateChangeAction
+              Entity: System.User
+  - name: do not allow creating System.Session inside a loop
+    allow: false
+    input:
+      $Type: Microflows$Microflow
+      Name: MyFlow
+      ObjectCollection:
+        $Type: Microflows$MicroflowObjectCollection
+        Objects:
+          - $Type: Microflows$LoopedActivity
+            ObjectCollection:
+              $Type: Microflows$MicroflowObjectCollection
+              Objects:
+                - $Type: Microflows$ActionActivity
+                  Action:
+                    $Type: Microflows$CreateChangeAction
+                    Entity: System.Session

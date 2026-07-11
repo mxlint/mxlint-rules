@@ -1,0 +1,11 @@
+TestCases:
+  - name: allow when strict page url check enabled
+    allow: true
+    input:
+      $Type: Security$ProjectSecurity
+      StrictPageUrlCheck: true
+  - name: do not allow when strict page url check disabled
+    allow: false
+    input:
+      $Type: Security$ProjectSecurity
+      StrictPageUrlCheck: false

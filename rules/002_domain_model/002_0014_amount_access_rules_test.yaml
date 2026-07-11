@@ -1,0 +1,50 @@
+TestCases:
+  - name: allow entity with few access rules
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: SmallEntity
+          AccessRules:
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+  - name: allow entity with no access rules
+    allow: true
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: NoRules
+          AccessRules: []
+  - name: do not allow entity with too many access rules
+    allow: false
+    input:
+      Entities:
+        - $Type: DomainModels$EntityImpl
+          Name: BigEntity
+          AccessRules:
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
+            - $Type: DomainModels$AccessRule
+              DefaultMemberAccessRights: ReadOnly
