@@ -1,0 +1,23 @@
+# Fixture domain model used by 002_0012_multilevel_inheritance_test.yaml.
+# It is intentionally NOT a rule file, so the rule scanner ignores it.
+# It defines an inheritance chain: Base <- Middle <- Leaf.
+$Type: DomainModels$DomainModel
+Associations: []
+CrossAssociations: []
+Documentation: ""
+Entities:
+    - $Type: DomainModels$EntityImpl
+      Name: Base
+      MaybeGeneralization:
+        $Type: DomainModels$NoGeneralization
+        Persistable: true
+    - $Type: DomainModels$EntityImpl
+      Name: Middle
+      MaybeGeneralization:
+        $Type: DomainModels$Generalization
+        Generalization: Inheritance.Base
+    - $Type: DomainModels$EntityImpl
+      Name: Leaf
+      MaybeGeneralization:
+        $Type: DomainModels$Generalization
+        Generalization: Inheritance.Middle
