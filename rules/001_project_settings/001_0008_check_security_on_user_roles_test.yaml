@@ -1,0 +1,15 @@
+TestCases:
+  - name: allow when user role is checked for security
+    allow: true
+    input:
+      UserRoles:
+        - $Type: Security$UserRole
+          Name: Administrator
+          CheckSecurity: true
+  - name: do not allow when user role is not checked for security
+    allow: false
+    input:
+      UserRoles:
+        - $Type: Security$UserRole
+          Name: Administrator
+          CheckSecurity: false

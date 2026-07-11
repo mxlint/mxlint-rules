@@ -1,28 +1,26 @@
+# The rule reads Security$ProjectSecurity.yaml from the working directory.
+# During tests the working directory is this rule's folder, which contains a
+# fixture Security$ProjectSecurity.yaml with StrictMode disabled. Cases that
+# enable the optimized (React) client therefore expect a violation.
 TestCases:
-  - name: allow when UseOptimizedClient is false
+  - name: allow when optimized client is disabled
     allow: true
     input:
-      UseOptimizedClient: false
-    files:
-      "Security$ProjectSecurity.yaml":
-        StrictMode: false
-  - name: allow when both UseOptimizedClient and StrictMode are true
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Forms$WebUIProjectSettingsPart
+          UseOptimizedClient: "No"
+  - name: allow when optimized client setting is absent
     allow: true
     input:
-      UseOptimizedClient: true
-    files:
-      "Security$ProjectSecurity.yaml":
-        StrictMode: true
-  - name: do not allow UseOptimizedClient true but StrictMode false
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Settings$ModelSettings
+          HashAlgorithm: BCrypt
+  - name: do not allow optimized client enabled while strict mode is disabled
     allow: false
     input:
-      UseOptimizedClient: true
-    files:
-      "Security$ProjectSecurity.yaml":
-        StrictMode: false
-  - name: do not allow UseOptimizedClient true but StrictMode missing
-    allow: false
-    input:
-      UseOptimizedClient: true
-    files:
-      "Security$ProjectSecurity.yaml": {}
+      $Type: Settings$ProjectSettings
+      Settings:
+        - $Type: Forms$WebUIProjectSettingsPart
+          UseOptimizedClient: "Yes"
