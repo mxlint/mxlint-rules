@@ -1,0 +1,9 @@
+$Type: Microflows$Microflow
+Name: SharedName
+ObjectCollection:
+    $Type: Microflows$MicroflowObjectCollection
+    Objects:
+        - $Type: Microflows$ActionActivity
+          Action:
+            $Type: Microflows$ChangeAction
+            Commit: "No"

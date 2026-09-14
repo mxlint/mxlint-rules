@@ -1,6 +1,5 @@
-# Fixture microflows for transitive lookup live under ./ModuleA/*.yaml
-# and follow the type-scoped naming convention (Name.Microflows$Microflow.yaml)
-# used by other rule fixtures in this repo.
+# Fixtures sit under ./ModuleA/ and ./ModuleB/, some in subfolders; those resolve via
+# the app.yaml run-policy-tests.sh generates - run that script, not test-rules alone.
 TestCases:
 # --- allowed: structural / defensive ---
 - name: allow microflow with no looped activity
@@ -43,8 +42,10 @@ TestCases:
               $Type: Microflows$MicroflowCall
               Microflow: ModuleA.CommitInLoop
 
-- name: allow loop calling a microflow reference that does not resolve to a file
-  allow: true
+# Reported rather than ignored: treating a failed lookup as "does not commit" is
+# what let a broken resolver pass every microflow in a project.
+- name: do not allow loop calling a microflow reference that does not resolve to a file
+  allow: false
   input:
     $Type: Microflows$Microflow
     Name: LoopCallsMissing
@@ -62,8 +63,8 @@ TestCases:
                     $Type: Microflows$MicroflowCall
                     Microflow: NonExistentModule.NonExistentFlow
 
-- name: allow loop calling a microflow reference without a module prefix
-  allow: true
+- name: do not allow loop calling a microflow reference without a module prefix
+  allow: false
   input:
     $Type: Microflows$Microflow
     Name: LoopCallsMalformed
@@ -236,7 +237,10 @@ TestCases:
                   Commit: "Yes"
 
 # --- disallowed: loop -> sub with a commit-capable action ---
-- name: do not allow loop calling sub-microflow that contains a CommitAction
+
+# In ModuleA/SomeFolder/, so this fails against a resolver that maps a name
+# straight onto Module/Name.yaml.
+- name: do not allow loop calling sub-microflow in a subfolder that contains a CommitAction
   allow: false
   input:
     $Type: Microflows$Microflow
@@ -362,3 +366,62 @@ TestCases:
                   MicroflowCall:
                     $Type: Microflows$MicroflowCall
                     Microflow: ModuleA.RecursiveCommit
+
+# --- document resolution: same name in two modules, and file/Name mismatch ---
+- name: do not allow loop calling a sub-microflow whose name is also used by another module that does not commit
+  allow: false
+  input:
+    $Type: Microflows$Microflow
+    Name: LoopCallsSharedNameCommitting
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowCall:
+                    $Type: Microflows$MicroflowCall
+                    Microflow: ModuleA.SharedName
+
+- name: allow loop calling a sub-microflow whose name is also used by another module that does commit
+  allow: true
+  input:
+    $Type: Microflows$Microflow
+    Name: LoopCallsSharedNameClean
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowCall:
+                    $Type: Microflows$MicroflowCall
+                    Microflow: ModuleB.SharedName
+
+# That file holds a document named NotMismatch, so it is not ModuleA.Mismatch.
+- name: do not allow loop calling a microflow whose file holds a differently named document
+  allow: false
+  input:
+    $Type: Microflows$Microflow
+    Name: LoopCallsMismatch
+    ObjectCollection:
+      $Type: Microflows$MicroflowObjectCollection
+      Objects:
+        - $Type: Microflows$LoopedActivity
+          ObjectCollection:
+            $Type: Microflows$MicroflowObjectCollection
+            Objects:
+              - $Type: Microflows$ActionActivity
+                Action:
+                  $Type: Microflows$MicroflowCallAction
+                  MicroflowCall:
+                    $Type: Microflows$MicroflowCall
+                    Microflow: ModuleA.Mismatch

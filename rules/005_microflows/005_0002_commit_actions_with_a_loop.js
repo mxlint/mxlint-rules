@@ -19,31 +19,31 @@ const metadata = {
 function rule(input = {}) {
     const errors = [];
 
-    function collect(node, predicate, acc) {
-        acc = acc || [];
-        if (!node || typeof node !== "object") return acc;
-        if (predicate(node)) acc.push(node);
+    function findNodes(node, matches, found) {
+        found = found || [];
+        if (!node || typeof node !== "object") return found;
+        if (matches(node)) found.push(node);
         for (const key of Object.keys(node)) {
-            const v = node[key];
-            if (Array.isArray(v)) {
-                for (const item of v) collect(item, predicate, acc);
-            } else if (v && typeof v === "object") {
-                collect(v, predicate, acc);
+            const value = node[key];
+            if (Array.isArray(value)) {
+                for (const item of value) findNodes(item, matches, found);
+            } else if (value && typeof value === "object") {
+                findNodes(value, matches, found);
             }
         }
-        return acc;
+        return found;
     }
 
-    const isLoop = n => n["$Type"] === "Microflows$LoopedActivity";
+    const isLoopedActivity = n => n["$Type"] === "Microflows$LoopedActivity";
 
-    const isCall = n =>
+    const isMicroflowCallActivity = n =>
         n["$Type"] === "Microflows$ActionActivity" &&
         n.Action &&
         n.Action["$Type"] === "Microflows$MicroflowCallAction" &&
         n.Action.MicroflowCall &&
         n.Action.MicroflowCall.Microflow;
 
-    const isCommit = n =>
+    const isCommittingActivity = n =>
         n["$Type"] === "Microflows$ActionActivity" &&
         n.Action && (
             n.Action["$Type"] === "Microflows$CommitAction" ||
@@ -51,59 +51,123 @@ function rule(input = {}) {
             (n.Action["$Type"] === "Microflows$CreateChangeAction" && n.Action.Commit === "Yes")
         );
 
-    function refToPath(ref) {
-        const parts = ref.split(".");
-        if (parts.length !== 2) return null;
-        return parts[0] + "/" + parts[1] + ".Microflows$Microflow.yaml";
-    }
+    // --- Document resolution -------------------------------------------------
+    // "Module.Name" hides the folder a document sits in: try the direct path, then
+    // app.yaml, the export's path map. Twin in 004_0003 (no imports in this runtime).
 
-    const pathPrefixes = ["", "rules/005_microflows/", "./rules/005_microflows/"];
+    const documentCache = {};  // one document only: each gets a fresh scope
+    let documentPaths = null;
 
-    function tryReadYaml(relPath) {
-        for (const prefix of pathPrefixes) {
-            try {
-                const doc = mxlint.io.readYaml(prefix + relPath);
-                if (doc) return doc;
-            } catch (e) {
-                // try next prefix
+    // Module name -> every document below it, by file name. A top-level directory
+    // of the export is a module, and its name is the one the qualified name uses.
+    function documentPathsPerModule() {
+        if (documentPaths) return documentPaths;
+        documentPaths = {};
+        let app = null;
+        try {
+            app = mxlint.io.readYaml("app.yaml");
+        } catch (e) {
+            // no path map: only documents at their module root will resolve
+        }
+        for (const root of (app && app.content) || []) {
+            if (!root || root.type !== "directory" || !root.name) continue;
+            const documentsInModule = documentPaths[root.name] || (documentPaths[root.name] = {});
+            const stack = [root];
+            while (stack.length > 0) {
+                const node = stack.pop();
+                for (const child of node.content || []) {
+                    if (child.type === "directory") {
+                        stack.push(child);
+                    } else if (child.name && child.path && !(child.name in documentsInModule)) {
+                        documentsInModule[child.name] = child.path;
+                    }
+                }
             }
         }
-        return null;
+        return documentPaths;
     }
 
-    function commitsTransitively(ref, visited) {
-        if (visited.has(ref)) return false;
-        visited.add(ref);
-        const path = refToPath(ref);
-        if (!path) return false;
-        const doc = tryReadYaml(path);
-        if (!doc) return false;
-        if (collect(doc, isCommit).length > 0) return true;
-        for (const call of collect(doc, isCall)) {
-            if (commitsTransitively(call.Action.MicroflowCall.Microflow, visited)) return true;
+    // "Module.Name" -> the document, or null when it is not in the export.
+    function readDocument(qualifiedName, documentType) {
+        const key = documentType + ":" + qualifiedName;
+        if (key in documentCache) return documentCache[key];
+
+        let document = null;
+        const nameParts = qualifiedName.split(".");
+        if (nameParts.length === 2) {
+            const moduleName = nameParts[0];
+            const documentName = nameParts[1];
+            const fileName = documentName + "." + documentType + ".yaml";
+            try {
+                document = mxlint.io.readYaml(moduleName + "/" + fileName);
+            } catch (e) {
+                document = null;
+            }
+            // Not at the module root: ask the export's path map.
+            if (!document) {
+                const documentsInModule = documentPathsPerModule()[moduleName];
+                if (documentsInModule && fileName in documentsInModule) {
+                    try {
+                        document = mxlint.io.readYaml(documentsInModule[fileName]);
+                    } catch (e) {
+                        document = null;
+                    }
+                }
+            }
+            // A file that turned out to hold a different document is not a match.
+            if (document && document.Name && document.Name !== documentName) document = null;
         }
-        return false;
+        documentCache[key] = document || null;
+        return documentCache[key];
+    }
+
+    // --- Call graph ------------------------------------------------------------
+    // An unresolvable reference is reported, not assumed harmless: a failed lookup
+    // is indistinguishable from a microflow that does not commit.
+    function searchCallChainForCommit(qualifiedName, alreadySearched) {
+        if (alreadySearched.has(qualifiedName)) return { commits: false, unresolved: null };
+        alreadySearched.add(qualifiedName);
+
+        const microflow = readDocument(qualifiedName, "Microflows$Microflow");
+        if (!microflow) return { commits: false, unresolved: qualifiedName };
+        if (findNodes(microflow, isCommittingActivity).length > 0) return { commits: true, unresolved: null };
+
+        let unresolved = null;
+        for (const call of findNodes(microflow, isMicroflowCallActivity)) {
+            const calleeResult = searchCallChainForCommit(call.Action.MicroflowCall.Microflow, alreadySearched);
+            if (calleeResult.commits) return calleeResult;
+            if (calleeResult.unresolved && !unresolved) unresolved = calleeResult.unresolved;
+        }
+        return { commits: false, unresolved: unresolved };
     }
 
     const prefix = "[" + metadata.custom.severity + ", " + metadata.custom.category + ", " + metadata.custom.rulenumber + "] ";
-    const flowName = input.Name || "unknown";
+    const microflowName = input.Name || "unknown";
 
-    const loops = collect(input, isLoop);
-    const reportedCommitNodes = new Set();
-    const reportedIndirectRefs = new Set();
+    const loops = findNodes(input, isLoopedActivity);
+    const reportedActivities = new Set();
+    const reportedCalls = new Set();
 
     for (const loop of loops) {
-        for (const c of collect(loop, isCommit)) {
-            if (reportedCommitNodes.has(c)) continue;
-            reportedCommitNodes.add(c);
-            errors.push(prefix + c.Action["$Type"] + " inside " + flowName + " loop");
+        for (const activity of findNodes(loop, isCommittingActivity)) {
+            if (reportedActivities.has(activity)) continue;
+            reportedActivities.add(activity);
+            errors.push(prefix + activity.Action["$Type"] + " inside " + microflowName + " loop");
         }
-        for (const call of collect(loop, isCall)) {
-            const ref = call.Action.MicroflowCall.Microflow;
-            if (reportedIndirectRefs.has(ref)) continue;
-            if (commitsTransitively(ref, new Set())) {
-                reportedIndirectRefs.add(ref);
-                errors.push(prefix + "Microflow " + ref + " called from " + flowName + " loop commits (directly or transitively)");
+        for (const call of findNodes(loop, isMicroflowCallActivity)) {
+            const calledMicroflow = call.Action.MicroflowCall.Microflow;
+            if (reportedCalls.has(calledMicroflow)) continue;
+            const result = searchCallChainForCommit(calledMicroflow, new Set());
+            if (result.commits) {
+                reportedCalls.add(calledMicroflow);
+                errors.push(prefix + "Microflow " + calledMicroflow + " called from " + microflowName + " loop commits (directly or transitively)");
+            } else if (result.unresolved) {
+                reportedCalls.add(calledMicroflow);
+                errors.push(prefix + "Microflow " + calledMicroflow + " called from " + microflowName + " loop " +
+                    (result.unresolved === calledMicroflow
+                        ? "could not be resolved"
+                        : "reaches " + result.unresolved + ", which could not be resolved") +
+                    "; it cannot be verified that it does not commit");
             }
         }
     }

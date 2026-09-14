@@ -1,0 +1,8 @@
+$Type: Microflows$Microflow
+Name: NotMismatch
+ObjectCollection:
+    $Type: Microflows$MicroflowObjectCollection
+    Objects:
+        - $Type: Microflows$ActionActivity
+          Action:
+            $Type: Microflows$CommitAction
